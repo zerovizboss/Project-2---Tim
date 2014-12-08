@@ -1,0 +1,144 @@
+method checkout
+{
+	Insert CustomerID
+	loop while customerID = null (1 loop only if customerID = null)
+	{
+		if new customer (CustomerID not found)
+		{
+			newCustomerID = customerID max (query) + 1
+			LName = get Last Name (user input)
+			FName = get First Name (user input)
+			balance = 0
+			TotalRentals = 0
+			
+			create new row in customer table (with above info)
+		}
+		else
+		{
+			if balance != 0
+			{
+				customer needs to pay balance
+				loop until exit = true
+				{
+					ask customer if they want to pay off balance now
+					if answer = yes
+					{
+						call adjust balance
+						check if balance payed off
+						if balance = 0
+							exit = yes
+						else
+							return; (exits method, returns to main menu)
+					}
+					else if answer = no
+						return; (exit method, returns to main menu)
+					else
+					{
+						invalid answer
+						exit = false
+					}
+				}
+			}
+			
+			if TotalRentals = 2
+			{
+				customer needs to return movies
+				loop until exit = true
+				{
+					ask customer if they want to return their movies now
+					if answer = yes
+					{
+						call return
+						exit = true
+					}
+					else if answer = no
+						return; (exit method, returns to main menu)
+					else
+					{
+						invalid answer
+						exit = false
+					}
+				}
+			}
+			
+			if balance = 0 && Total Rentals < 2
+			{
+				invoiceID = invoiceID max (query) + 1
+				invoiceDate = get current date
+				x = 0
+				
+				loop until exit = true
+				{
+					if TotalRentals < 2 (all line data will be in an array of 2)
+					{
+						LineID = x++
+						movieID = get movieID (user response)  	<---- another reason I think inventoryID would be better.
+						copyID = get copyID (user response)		<----/
+						releaseDate = get releaseDate (query using movieID)
+						testDate = releaseDate + 1 month
+						if genre = cartoon (query using movieID) && currentDate < testDate (new release && cartoon)
+						{	
+							ExpReturnDate = invoiceDate + 4 days
+							rate = 3
+						}
+						else if genre = cartoon (query using movieID) (not new release && cartoon)
+						{
+							ExpReturnDate = invoiceDate + 5 days
+							rate = 3
+						}
+						else if currentDate < testDate (new release && not cartoon)
+						{
+							ExpReturnDate = invoiceDate + 4 days
+							rate = 1	
+						}
+						else (not new release && not cartoon)
+						{
+							ExpReturnDate = invoiceDate + 5 days
+							rate = 2
+						}
+						is this the only movie you are checking out?
+						if answer = yes
+							exit = true
+						increment to next line
+					}
+					else	
+					{
+						let customer know he/she has the max TotalRentals limit
+						exit = true
+					}
+				}
+				
+				create new invoice row (sql)
+				if 2 lines 
+					create line 1 row (sql)
+					create line 2 row (sql)     	<--------- information gathered above
+				else
+					create line 1 row (sql)
+			}
+		}
+	}
+}
+	
+UserName: 	Video
+Password: 	unfproject2
+Domain:		23.229.180.72
+
+business rules, you can have a balance tab up to 2 movies.
+	
+	
+Locate
+	by genre
+	by title
+	by aisle
+	by section
+	
+GitHub
+UserName:	zerovizboss
+Password:	osprey14
+
+	
+	
+	
+	
+	
+	
